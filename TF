@@ -1,0 +1,13 @@
+
+mycolors <- colorRampPalette(brewer.pal(8, "Set2"))(27)
+    ggplot(mincle.tf, aes(Start, 3, label=Name, color=Name)) 
+        +geom_segment(aes(x=-Start, y=2.8, xend=-End, yend=2.8), size=10, data=mincle.tf[Strand=="-" & Score > 9], alpha=0.5)
+        +geom_segment(aes(x=-Start, y=3.2, xend=-End, yend=3.2), size=10, data=mincle.tf[Strand=="+" & Score > 9], alpha=0.5)
+        +scale_color_manual(values = mycolors)+geom_segment(aes(x = 0, y = 3, xend = -1000, yend = 3), size=1, color="black")
+        +geom_text_repel(data=mincle.tf[Strand=="+" & Score > 9],aes(-Start, 3.2), nudge_y = 0.15, point.padding = 0.8, box.padding = 0.8, direction = "x", angle=90, hjust=0.5, vjust=1)
+        +geom_text_repel(data=mincle.tf[Strand=="-" & Score > 9],aes(-Start, 2.8), nudge_y = -0.1, point.padding = 0.5, box.padding = 0.5, direction = "x", angle=90, hjust=0.5, vjust=1)+ylim(2.5, 3.5)
+        +geom_segment(aes(x=-pos, y=2.98, xend=-pos, yend=3.02), size=0.5, color="black", data = dt3, inherit.aes = FALSE)
+        +annotate("text", x=-dt3$pos, y=2.95, label=-dt3$pos, size=3)
+        +annotate("text", x=-500, y=2.55, label="- Strand", size=6)
+            +guides(color = FALSE, size = FALSE)+annotate("text", x=-500, y=3.45, label="+ Strand", size=6)
+            +guides(color = FALSE, size = FALSE)+theme_void()
